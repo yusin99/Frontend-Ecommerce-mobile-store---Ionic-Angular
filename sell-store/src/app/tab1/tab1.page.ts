@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from './../services/product.service';
 import { ProductModel } from './../Models/product-model';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { ReadVarExpr } from '@angular/compiler';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -27,12 +27,25 @@ export class Tab1Page implements OnInit {
   listArrayOfProducts: ProductModel[] = [];
   displayedList: ProductModel[] = [];
   currentPage: number = 1;
+  currentPlatform: boolean;
   constructor(
     private productService: ProductService,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private platform: Platform
   ) {
-    console.log(this.sliderImages);
+    this.platform.ready().then(() => {
+      if (this.platform.is('android')) {
+        this.currentPlatform = true;
+        console.log('android');
+      } else if (this.platform.is('ios')) {
+        this.currentPlatform = false;
+        console.log('ios');
+      } else {
+        //fallback to browser APIs or
+        console.log('The platform is not supported');
+      }
+    });
   }
   async ngOnInit() {
     const loader = await this.loadingController.create({
@@ -52,6 +65,17 @@ export class Tab1Page implements OnInit {
         console.log(err);
       }
     );
+  }
+  loadingSpinner() {
+    this.loadingController
+      .create({
+        message: 'Loading details',
+        animated: true,
+        spinner: 'crescent',
+        backdropDismiss: false,
+        showBackdrop: true,
+      })
+      .then((el) => el.present());
   }
   async loadMoreData(e: any) {
     const toast = await this.toastController.create({

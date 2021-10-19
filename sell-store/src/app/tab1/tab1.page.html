@@ -8,7 +8,7 @@
     </ion-buttons>
     <ion-title size="medium"> Sell Store </ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button routerLink="/search">
         <ion-icon name="search-outline" slot="icon-only"></ion-icon>
       </ion-button>
       <ion-button class="cart" routerLink="/tabs/tab3">
@@ -28,7 +28,11 @@
 
   <app-explore-container name="Shop page"></app-explore-container> -->
 
-  <ion-toolbar style="position: fixed; top: 40px" color="light">
+  <ion-toolbar
+    style="position: fixed"
+    [ngClass]="currentPlatform ? android_toolbar : ios_toolbar"
+    color="light"
+  >
     <ion-buttons slot="primary">
       <ion-button color="dark" expand="block" fill="clear">
         <ion-icon name="funnel-outline" slot="end"></ion-icon>
@@ -57,6 +61,7 @@
         <ion-list>
           <ion-item
             *ngFor="let prod of displayedList"
+            (click)="loadingSpinner()"
             class="item-entry"
             detail
             routerLink="/tabs/tab1/single-product-page/{{prod.id}}"

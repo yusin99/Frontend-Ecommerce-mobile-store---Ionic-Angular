@@ -1,11 +1,20 @@
 // ion-icon[name="cart-outline"] {
 //   color: rgba(231, 143, 78, 0.74);
 // }
-
+ion-toolbar {
+  padding-right: 10px;
+}
 ion-buttons[slot="end"] > ion-button.cart {
   margin-right: -5px;
 }
-
+.ios_toolbar {
+  position: fixed;
+  top: 40px;
+}
+.android_toolbar {
+  position: fixed;
+  top: 55px;
+}
 ion-buttons[slot="primary"] {
   width: 100%;
   display: flex;
