@@ -22,7 +22,6 @@ export class SingleProductPagePage implements OnInit {
   ngOnInit() {
     this.route.data.subscribe((data: any) => {
       this.product = data.product;
-      console.log(data);
       this.showData = true;
     });
     // this.route.paramMap

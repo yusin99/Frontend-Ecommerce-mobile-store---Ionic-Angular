@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FilterMenuComponent } from './filter-menu.component';
+import { FilterModalComponent } from './filter-modal.component';
 
-describe('FilterMenuComponent', () => {
-  let component: FilterMenuComponent;
-  let fixture: ComponentFixture<FilterMenuComponent>;
+describe('FilterModalComponent', () => {
+  let component: FilterModalComponent;
+  let fixture: ComponentFixture<FilterModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilterMenuComponent ],
+      declarations: [ FilterModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FilterMenuComponent);
+    fixture = TestBed.createComponent(FilterModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
