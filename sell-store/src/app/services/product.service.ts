@@ -12,7 +12,8 @@ export class ProductService {
 
   getAllProducts(pageNumber: number = 1): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(
-      `${this.url}/products/page=${pageNumber}&per_page=10`
+      // eslint-disable-next-line max-len
+      `${this.url}/products?page=${pageNumber}&per_page=10`
     );
   }
   getSingleProduct(id: number): Observable<ProductModel[]> {

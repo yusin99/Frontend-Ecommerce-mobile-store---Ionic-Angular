@@ -6,11 +6,18 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
-  }
+  },
+  {
+    path: 'single-product-page/:id',
+    loadChildren: () =>
+      import('./single-product-page/single-product-page.module').then(
+        (m) => m.SingleProductPagePageModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class Tab1PageRoutingModule {}
