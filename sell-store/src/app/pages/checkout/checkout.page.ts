@@ -17,8 +17,6 @@ import { OrderModel } from './../../Models/order-model';
   styleUrls: ['./checkout.page.scss'],
 })
 export class CheckoutPage implements OnInit {
-  constructor(public cartService: CartService, private storage: Storage) {}
-
   isPersonalUp: boolean;
   isBillingUp: boolean;
   isShippingUp: boolean;
@@ -33,6 +31,7 @@ export class CheckoutPage implements OnInit {
   taxesRate;
   finalTax = 0;
   math = Math;
+  constructor(public cartService: CartService, private storage: Storage) {}
 
   async ngOnInit() {
     this.isPersonalUp = false;
@@ -54,7 +53,6 @@ export class CheckoutPage implements OnInit {
     );
 
     this.cartService.cartTotal.subscribe((total) => (this.cartTotal = total));
-
     this.storage.get('user').then((userData) => (this.userDetails = userData));
 
     this.cartService

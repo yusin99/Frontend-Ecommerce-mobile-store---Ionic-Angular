@@ -47,7 +47,7 @@ export class CartService {
       if (data) {
         this.cartDataArray = data;
         this.cartData$.next(this.cartDataArray);
-        // TODO Calculate Total
+        this.calculateTotal();
       }
     });
   }
@@ -179,6 +179,7 @@ export class CartService {
     this.cartDataArray = { count: 0, productData: [] };
     this.calculateTotal();
     this.cartData$.next(this.cartDataArray);
+    this.storage.remove('cart');
   }
   private calculateTotal() {
     this.totalAmount = 0;
@@ -189,12 +190,14 @@ export class CartService {
       this.cartDataArray.productData.forEach((p: ProductModel) => {
         this.totalAmount += parseInt(p.price, 10) * p.in_cart;
       });
+      console.log(this.totalAmount);
       this.totalAmount$.next(this.totalAmount);
     }
   }
   get cartData(): Observable<CartModel> {
     return this.cartData$.asObservable();
   }
+
   get cartTotal(): Observable<number> {
     return this.totalAmount$.asObservable();
   }

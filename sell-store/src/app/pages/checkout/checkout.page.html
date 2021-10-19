@@ -228,7 +228,6 @@
                   name="chevron-up-outline"
                   size="medium"
                   slot="icon-only"
-                  style="color: #3f1ce0"
                 ></ion-icon>
               </ion-label>
             </ion-list-header>
@@ -362,7 +361,9 @@
                 </ion-label>
                 <ion-label slot="end">
                   <ion-spinner name="bubbles" *ngIf="!subTotal"></ion-spinner>
-                  <ion-text *ngIf="subTotal">{{ subTotal }}</ion-text>
+                  <ion-text *ngIf="subTotal"
+                    >{{ subTotal|currency:'EUR' }}</ion-text
+                  >
                 </ion-label>
               </ion-item>
 
@@ -378,7 +379,7 @@
                 <ion-label slot="end">
                   <ion-spinner name="bubbles" *ngIf="!finalTax"></ion-spinner>
                   <ion-text *ngIf="finalTax"
-                    >{{ finalTax|currency:'INR'}}</ion-text
+                    >{{ finalTax|currency:'EUR'}}</ion-text
                   >
                 </ion-label>
               </ion-item>
@@ -386,7 +387,7 @@
               <ion-item>
                 <ion-label slot="start"> Total </ion-label>
                 <ion-label slot="end">
-                  <ion-text>{{ cartTotal | currency:"EUR"}}</ion-text>
+                  <ion-text>{{ cartTotal|currency:'EUR' }}</ion-text>
                 </ion-label>
               </ion-item>
             </ion-list>

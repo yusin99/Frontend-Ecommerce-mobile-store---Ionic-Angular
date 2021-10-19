@@ -17,6 +17,7 @@ export class Tab3Page implements OnInit {
 
   ngOnInit() {
     this.cartService.cartData.subscribe((data) => {
+      console.log(data);
       this.cart = data;
     });
 
