@@ -9,11 +9,11 @@ ion-buttons[slot="end"] > ion-button.cart {
 }
 .ios_toolbar {
   position: fixed;
-  top: 40px;
+  top: 83px;
 }
 .android_toolbar {
   position: fixed;
-  top: 55px;
+  top: 111px;
 }
 ion-buttons[slot="primary"] {
   width: 100%;
@@ -29,7 +29,7 @@ ion-thumbnail {
   margin-right: 10px;
 }
 .item-entry {
-  padding: 10px 0;
+  padding: 15px 0;
 }
 
 .item-name {

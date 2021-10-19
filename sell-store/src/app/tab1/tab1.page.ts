@@ -190,6 +190,8 @@ export class Tab1Page implements OnInit {
     });
     if (e === null) {
       this.currentPage = 1;
+      // e.target.disabled = true;
+      return;
     } else {
       this.currentPage++;
       this.productService.getAllProducts(this.currentPage).subscribe(
@@ -275,6 +277,19 @@ export class Tab1Page implements OnInit {
       if (this.filterCount === 0) {
         this.displayedList = [...this.listArrayOfProducts];
       }
+    }
+  }
+  segmentChanged(event) {
+    const value = event.target.value;
+    if (value === 'Featured') {
+      this.loadMoreData(null).then();
+      this.displayedList = this.listArrayOfProducts.filter(
+        (p: ProductModel) => {
+          p.featured === true;
+        }
+      );
+    } else {
+      this.displayedList = [...this.listArrayOfProducts];
     }
   }
 }

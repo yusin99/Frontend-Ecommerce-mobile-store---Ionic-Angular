@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   AlertController,
@@ -11,8 +12,10 @@ import { Storage } from '@ionic/storage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CartModel } from './../Models/cart-model';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ProductModel } from './../Models/product-model';
+import { WriteObject } from './back-interceptor.interceptor';
+import { OrderModel } from './../Models/order-model';
 
 @Injectable({
   providedIn: 'root',
@@ -194,5 +197,41 @@ export class CartService {
   }
   get cartTotal(): Observable<number> {
     return this.totalAmount$.asObservable();
+  }
+  getAllPaymentGateways() {
+    return this.httpClient.get(`${this.serverUrl}/payment_gateways`);
+  }
+
+  getTaxes() {
+    return this.httpClient.get(`${this.serverUrl}/taxes`);
+  }
+
+  async createOrder(orderData: OrderModel) {
+    let headers = new HttpHeaders().set(WriteObject, '');
+    headers = headers.set('Content-Type', 'application/json');
+    const loader = await this.loadingController.create({
+      message: 'Placing order...',
+      animated: true,
+      spinner: 'circular',
+    });
+
+    await loader.present().then();
+
+    this.httpClient
+      .post(`${this.serverUrl}/orders`, { ...orderData }, { headers })
+      .subscribe(async (newOrderDetails: any) => {
+        await loader.dismiss().then();
+
+        const navigationExtras: NavigationExtras = {
+          state: {
+            message: 'Order Placed',
+            products: this.cartDataArray.productData,
+            orderId: newOrderDetails.id,
+            total: parseFloat(newOrderDetails.total),
+          },
+        };
+        this.emptyCart();
+        this.router.navigate(['/thankyou'], navigationExtras).then();
+      });
   }
 }

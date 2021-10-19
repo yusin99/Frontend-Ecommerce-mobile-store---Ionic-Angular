@@ -32,8 +32,7 @@
   <app-explore-container name="Shop page"></app-explore-container> -->
 
   <ion-toolbar
-    style="position: fixed"
-    [ngClass]="currentPlatform ? android_toolbar : ios_toolbar"
+    [ngClass]="{'android_toolbar': currentPlatform,'ios_toolbar':!currentPlatform}"
     color="light"
   >
     <ion-buttons slot="primary">
@@ -58,11 +57,22 @@
     </ion-buttons>
   </ion-toolbar>
 
+  <ion-toolbar style="position: fixed; border-top: 0" color="dark">
+    <ion-segment value="All" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="All">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Featured">
+        <ion-label>Featured</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <!-- <ion-title>Title</ion-title> -->
   <ion-slides
     [options]="sliderOptions"
     class="ion-padding"
     pager
-    style="margin-top: 4.2rem"
+    style="margin-top: 9rem"
   >
     <ion-slide *ngFor="let slide of sliderImages">
       <img [src]="slide" alt="images" />
