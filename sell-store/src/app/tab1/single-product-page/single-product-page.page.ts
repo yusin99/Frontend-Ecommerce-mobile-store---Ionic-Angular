@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ProductModel } from './../../Models/product-model';
 import { ProductService } from './../../services/product.service';
 import { map } from 'rxjs/operators';
+import { CartService } from './../../services/cart.service';
 @Component({
   selector: 'app-single-product-page',
   templateUrl: './single-product-page.page.html',
@@ -16,7 +17,8 @@ export class SingleProductPagePage implements OnInit {
   showData: boolean = false;
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -35,5 +37,8 @@ export class SingleProductPagePage implements OnInit {
     //       this.product = prod;
     //     });
     //   });
+  }
+  addProduct(product: ProductModel) {
+    this.cartService.addToCart(product);
   }
 }

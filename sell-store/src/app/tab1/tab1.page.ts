@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
@@ -13,6 +14,9 @@ import {
 import { Platform } from '@ionic/angular';
 import { SortModalComponent } from './../Components/sort-modal/sort-modal.component';
 import { CategoryModel } from './../Models/category-model';
+import { CartService } from '../services/cart.service';
+import { map } from 'rxjs/operators';
+import { CartModel } from '../Models/cart-model';
 
 @Component({
   selector: 'app-tab1',
@@ -44,13 +48,15 @@ export class Tab1Page implements OnInit {
   filterCount = 0;
   filteredCategoryList: any[] = [];
   categories: CategoryModel[] = [];
+  count: any = 0;
   constructor(
     private productService: ProductService,
     private loadingController: LoadingController,
     private toastController: ToastController,
     private platform: Platform,
     private modalController: ModalController,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private cartService: CartService
   ) {
     this.platform.ready().then(() => {
       if (this.platform.is('android')) {
@@ -64,6 +70,7 @@ export class Tab1Page implements OnInit {
         console.log('The platform is not supported');
       }
     });
+    this.loadMoreData(null);
   }
   async ngOnInit() {
     const loader = await this.loadingController.create({
@@ -84,6 +91,15 @@ export class Tab1Page implements OnInit {
       }
     );
     this.categories = await this.productService.getAllCategories().toPromise();
+    this.cartService.cartData
+      .pipe(
+        map((data: CartModel) => {
+          return data.count;
+        })
+      )
+      .subscribe((count: any) => {
+        this.count = count;
+      });
   }
   openFilterModal() {
     this.menuController.enable(true, 'filter').then();

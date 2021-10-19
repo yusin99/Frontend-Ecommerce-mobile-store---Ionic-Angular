@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides class="ion-padding">
+  <ion-slides>
     <ion-slide *ngFor="let i of product?.images">
       <ion-img [src]="i?.src" alt="{{product?.name}}"></ion-img>
     </ion-slide>
@@ -43,7 +43,12 @@
 <ion-footer>
   <ion-toolbar style="padding: 0 10px">
     <ion-label>
-      <ion-button color="tertiary" expand="full" fill="solid">
+      <ion-button
+        color="tertiary"
+        expand="full"
+        fill="solid"
+        (click)="addProduct(product)"
+      >
         Add to Cart
       </ion-button>
     </ion-label>
